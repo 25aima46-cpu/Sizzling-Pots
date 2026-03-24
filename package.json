@@ -1,21 +1,13 @@
 {
-  "name": "greenbasket",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "script.js",
+  "main": "backend/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/25aima46-cpu/greenbasket.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/25aima46-cpu/greenbasket/issues"
-  },
-  "homepage": "https://github.com/25aima46-cpu/greenbasket#readme"
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql": "^2.18.1"
+  }
 }
