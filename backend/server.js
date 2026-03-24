@@ -6,11 +6,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "greenbasket"
+const db = mysql.createConnection(process.env.const db = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
+
+db.connect((err) => {
+  if (err) {
+    console.log("DB ERROR:", err);
+  } else {
+    console.log("Connected to Railway DB ✅");
+  }
+}););
+
+db.connect((err) => {
+  if (err) {
+    console.log("DB ERROR:", err);
+  } else {
+    console.log("Connected to Railway DB ✅");
+  }
 });
 
 db.connect((err) => {
