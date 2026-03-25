@@ -9,8 +9,8 @@
 
 <h3>Student Details</h3>
 <p><b>Name:</b> Sylvester Galilee</p>
-<p><b>Class:</b> Your Class Name</p>
-<p><b>Email:</b> your@email.com</p>
+<p><b>Class:</b> 2nd Sem BSc AIML/p>
+<p><b>Email:</b> 25aima46@kristujayanti.com/p>
 
 <hr>
 
@@ -38,15 +38,20 @@ document.getElementById("orderForm").addEventListener("submit", async (e) => {
     quantity: document.getElementById("quantity").value
   };
 
-  await fetch("/add-order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
+  try {
+    const res = await fetch("/add-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
 
-  alert("Order Placed!");
+    const text = await res.text();
+    alert(text);
+  } catch (err) {
+    alert("Error submitting order");
+  }
 });
 </script>
 
