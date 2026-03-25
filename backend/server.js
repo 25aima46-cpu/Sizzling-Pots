@@ -42,8 +42,10 @@ app.get("/orders", (req, res) => {
 });
 
 app.listen(process.env.PORT || 3000);
+const path = require("path");
+
 app.get("/", (req, res) => {
-  res.send("Welcome to GreenBasket 🛒 Server is running!");
+  res.sendFile(path.join(__dirname, "../index.html"));
 });
 const path = require("path");
 
@@ -62,3 +64,4 @@ app.post("/order", (req, res) => {
     }
   });
 });
+app.use(express.static(path.join(__dirname, "../")));

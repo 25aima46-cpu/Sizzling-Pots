@@ -2,17 +2,56 @@
 <html>
 <head>
   <title>GreenBasket Order</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      margin: 50px auto;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px gray;
+    }
+
+    input, button {
+      width: 90%;
+      padding: 10px;
+      margin: 5px;
+    }
+
+    h2 {
+      color: green;
+    }
+  </style>
 </head>
 <body>
 
-<h1>Place Your Order 🛒</h1>
+<div class="container">
 
-<form id="orderForm">
-  <input type="text" id="name" placeholder="Your Name" required><br><br>
-  <input type="text" id="item" placeholder="Item" required><br><br>
-  <input type="number" id="quantity" placeholder="Quantity" required><br><br>
-  <button type="submit">Order</button>
-</form>
+  <!-- 👇 YOUR DETAILS -->
+  <h2>GreenBasket 🛒</h2>
+  <p><b>Name:</b> Sylvester Galilee</p>
+  <p><b>Class:</b> 2nd Sem BSc AIML A</p>
+  <p><b>Email:</b> 25aima46@kristujayanti.com</p>
+
+  <hr>
+
+  <!-- ORDER FORM -->
+  <h3>Place Order</h3>
+
+  <form id="orderForm">
+    <input type="text" id="name" placeholder="Your Name" required><br>
+    <input type="text" id="item" placeholder="Item" required><br>
+    <input type="number" id="quantity" placeholder="Quantity" required><br>
+    <button type="submit">Order</button>
+  </form>
+
+</div>
 
 <script>
 document.getElementById("orderForm").addEventListener("submit", async (e) => {
