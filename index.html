@@ -1,57 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>GreenBasket</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<!-- 🌐 NAVBAR -->
+<div class="navbar">
+  <h2>🛒 GreenBasket</h2>
+  <a href="portfolio.html">My Portfolio</a>
+</div>
 
-  <!-- 🎓 STUDENT DETAILS -->
-  <div class="header">
-    <h1>🛒 GreenBasket</h1>
-    <p><b>Name:</b> S SYLVESTER GALILEE</p>
-    <p><b>Class:</b> 2nd Sem BSC AIML A</p>
-    <p><b>Email:</b> 25aima46@kristujayanti.com</p>
-  </div>
+<!-- 🎓 DETAILS -->
+<div class="header">
+  <h1>Welcome</h1>
+  <p>S SYLVESTER GALILEE</p>
+  <p>2nd Sem BSC AIML A</p>
+  <p>25aima46@kristujayanti.com</p>
+</div>
 
-  <!-- 🧾 ORDER CARD -->
-  <div class="card">
-    <h2>Place Your Order</h2>
+<!-- 🧾 ORDER CARD -->
+<div class="card">
+  <h2>Place Your Order</h2>
 
-    <input type="text" id="name" placeholder="Enter your name">
-    <input type="text" id="product" placeholder="Enter product">
-    <input type="number" id="quantity" placeholder="Enter quantity">
+  <input id="name" placeholder="Your Name">
+  <input id="product" placeholder="Product">
+  <input id="quantity" type="number" placeholder="Quantity">
 
-    <button onclick="placeOrder()">Place Order 🚀</button>
+  <button onclick="placeOrder()">Place Order 🚀</button>
 
-    <p id="message"></p>
-  </div>
-
+  <p id="msg"></p>
 </div>
 
 <script>
 function placeOrder() {
-  const name = document.getElementById("name").value;
-  const product = document.getElementById("product").value;
-  const quantity = document.getElementById("quantity").value;
-
   fetch("/add-order", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ name, product, quantity })
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      product: document.getElementById("product").value,
+      quantity: document.getElementById("quantity").value
+    })
   })
   .then(res => res.text())
-  .then(data => {
-    document.getElementById("message").innerText = data;
-  })
-  .catch(() => {
-    document.getElementById("message").innerText = "Error ❌";
-  });
+  .then(data => document.getElementById("msg").innerText = data);
 }
 </script>
 
