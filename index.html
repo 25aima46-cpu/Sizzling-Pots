@@ -2,48 +2,53 @@
 <html>
 <head>
   <title>GreenBasket</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="navbar">
-  <h2>🛒 GreenBasket</h2>
-  <a href="/portfolio">My Portfolio</a>
-</div>
+<h1>Welcome to GreenBasket 🛒</h1>
 
-<div class="header">
-  <h1>Welcome</h1>
-  <p>S SYLVESTER GALILEE</p>
-  <p>2nd Sem BSC AIML A</p>
-  <p>25aima46@kristujayanti.com</p>
-</div>
+<h2>Student Details</h2>
+<p><b>Name:</b> Sylvester Galilee</p>
+<p><b>Class:</b> 2nd Sem BSc AIML</p>
+<p><b>Email:</b> 25aima46@kristujayanti.com</p>
 
-<div class="card">
-  <h2>Place Your Order</h2>
+<hr>
 
-  <input id="name" placeholder="Your Name">
-  <input id="product" placeholder="Product">
-  <input id="quantity" type="number" placeholder="Quantity">
+<h2>Place Order</h2>
 
-  <button onclick="placeOrder()">Place Order 🚀</button>
+<form id="orderForm">
+  <input type="text" id="name" placeholder="Name" required><br><br>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <input type="text" id="className" placeholder="Class" required><br><br>
+  <input type="text" id="item" placeholder="Item" required><br><br>
 
-  <p id="msg"></p>
-</div>
+  <button type="submit">Place Order</button>
+</form>
+
+<br>
+
+<a href="/orders">View Orders</a>
 
 <script>
-function placeOrder() {
-  fetch("/add-order", {
+document.getElementById("orderForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const className = document.getElementById("className").value;
+  const item = document.getElementById("item").value;
+
+  const res = await fetch("/add-order", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({
-      name: document.getElementById("name").value,
-      product: document.getElementById("product").value,
-      quantity: document.getElementById("quantity").value
-    })
-  })
-  .then(res => res.text())
-  .then(data => document.getElementById("msg").innerText = data);
-}
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ name, email, className, item })
+  });
+
+  const data = await res.text();
+  alert(data);
+});
 </script>
 
 </body>

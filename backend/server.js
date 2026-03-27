@@ -3,13 +3,10 @@ const mysql = require("mysql2");
 const path = require("path");
 
 const app = express();
-
 app.use(express.json());
+app.use(express.static(__dirname));
 
-// ✅ SERVE STATIC FILES
-app.use(express.static(path.join(__dirname, "../")));
-
-// ✅ MYSQL CONNECTION
+// ✅ MySQL connection (Railway ENV)
 const db = mysql.createConnection({
   host: process.env.MYSQLHOST,
   user: process.env.MYSQLUSER,
@@ -18,41 +15,50 @@ const db = mysql.createConnection({
   port: process.env.MYSQLPORT
 });
 
-db.connect(err => {
+db.connect((err) => {
   if (err) {
-    console.log("DB Error:", err);
+    console.log("DB ERROR:", err);
   } else {
     console.log("Connected to MySQL ✅");
   }
 });
 
-// ✅ ROUTES
+// ✅ Home page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.get("/portfolio", (req, res) => {
-  res.sendFile(path.join(__dirname, "../portfolio.html"));
-});
-
-// ✅ INSERT ORDER
+// ✅ Insert order
 app.post("/add-order", (req, res) => {
-  const { name, product, quantity } = req.body;
+  console.log("DATA RECEIVED:", req.body);
 
-  const sql = "INSERT INTO orders (name, product, quantity) VALUES (?, ?, ?)";
+  const { name, email, className, item } = req.body;
 
-  db.query(sql, [name, product, quantity], (err) => {
+  const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
+
+  db.query(sql, [name, email, className, item], (err, result) => {
     if (err) {
-      console.log(err);
-      res.send("Error inserting data ❌");
+      console.log("INSERT ERROR:", err);
+      return res.send("Error inserting data");
     } else {
+      console.log("Inserted!");
       res.send("Order Placed Successfully ✅");
     }
   });
 });
 
-// ✅ PORT
+// ✅ View orders
+app.get("/orders", (req, res) => {
+  db.query("SELECT * FROM orders", (err, result) => {
+    if (err) {
+      return res.send("Error fetching data");
+    }
+    res.json(result);
+  });
+});
+
+// ✅ Start server
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+  console.log(`Server running on port ${PORT}`);
 });
