@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql2");
+const { Pool } = require("pg");
 const path = require("path");
 
 const app = express();
@@ -7,65 +7,56 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Serve frontend files
 app.use(express.static(path.join(__dirname, "..")));
 
-// ✅ MySQL connection (Railway)
-const db = mysql.createConnection({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT,
+// ✅ PostgreSQL connection
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
 });
 
-db.connect((err) => {
-  if (err) {
-    console.log("DB ERROR:", err);
-  } else {
-    console.log("Connected to MySQL ✅");
-  }
-});
-
-// ✅ Home page
+// ✅ Home
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
-// ✅ Portfolio page
+// ✅ Portfolio
 app.get("/portfolio", (req, res) => {
   res.sendFile(path.join(__dirname, "../portfolio.html"));
 });
 
 // ✅ Insert order
-app.post("/add-order", (req, res) => {
+app.post("/add-order", async (req, res) => {
   console.log("DATA RECEIVED:", req.body);
 
   const { name, email, class: studentClass, item } = req.body;
 
-  const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
+  try {
+    await pool.query(
+      "INSERT INTO orders (name, email, class, item) VALUES ($1, $2, $3, $4)",
+      [name, email, studentClass, item]
+    );
 
-  db.query(sql, [name, email, studentClass, item], (err, result) => {
-    if (err) {
-      console.log("INSERT ERROR:", err);
-      return res.send("Error inserting data");
-    }
     res.send("Order Placed Successfully ✅");
-  });
+  } catch (err) {
+    console.log("INSERT ERROR:", err);
+    res.send("Error inserting data");
+  }
 });
 
 // ✅ View orders
-app.get("/orders", (req, res) => {
-  db.query("SELECT * FROM orders", (err, result) => {
-    if (err) return res.send("Error fetching data");
-    res.json(result);
-  });
+app.get("/orders", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM orders");
+    res.json(result.rows);
+  } catch (err) {
+    res.send("Error fetching data");
+  }
 });
 
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
