@@ -42,12 +42,13 @@ app.get("/portfolio", (req, res) => {
 
 // ✅ Insert order
 app.post("/add-order", (req, res) => {
-   console.log("DATA RECIEVED:", req.body);
-  const { name, email, className, item } = req.body;
+  console.log("DATA RECEIVED:", req.body);
+
+  const { name, email, class: studentClass, item } = req.body;
 
   const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
 
-  db.query(sql, [name, email, className, item], (err, result) => {
+  db.query(sql, [name, email, studentClass, item], (err, result) => {
     if (err) {
       console.log("INSERT ERROR:", err);
       return res.send("Error inserting data");
