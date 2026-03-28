@@ -42,6 +42,7 @@ app.get("/portfolio", (req, res) => {
 
 // ✅ Insert order
 app.post("/add-order", (req, res) => {
+   console.log("DATA RECIEVED:", req.body);
   const { name, email, className, item } = req.body;
 
   const sql = "INSERT INTO orders (name, email, class, item) VALUES (?, ?, ?, ?)";
