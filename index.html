@@ -1,57 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Sizzling Pots</title>
+  <meta charset="UTF-8">
+  <title>Sizzling Pots 🍲</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="header">
-  <h1>Welcome to Sizzling Pots 🔥</h1>
-</div>
+  <h1>🔥 Sizzling Pots</h1>
+  <p>Hot & Delicious Food Delivered Fast</p>
 
-<div class="card">
-  <h2>Order Your Food</h2>
+  <!-- 🔥 ORDER FORM -->
+  <div class="card">
+    <h2>Order Your Food</h2>
 
-  <input id="name" placeholder="Name">
-  <input id="email" placeholder="Email">
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="email" id="email" placeholder="Enter Email">
 
-  <select id="item">
-    <option>Chicken Biryani</option>
-    <option>Meals</option>
-    <option>Roti Curry</option>
-    <option>Curd Rice</option>
-    <option>Fried Rice</option>
-    <option>Noodles</option>
-  </select>
+    <select id="item">
+      <option>Chicken Biryani</option>
+      <option>Meals</option>
+      <option>Roti Curry</option>
+      <option>Curd Rice</option>
+      <option>Fried Rice</option>
+      <option>Noodles</option>
+    </select>
 
-  <input id="class" placeholder="Address / Table No">
+    <input type="number" id="quantity" placeholder="Quantity">
 
-  <button onclick="placeOrder()">Order Now 🔥</button>
+    <button onclick="placeOrder()">Order Now 🔥</button>
 
-  <p id="msg"></p>
-</div>
+    <p id="msg"></p>
+  </div>
 
-<script>
-function placeOrder() {
-  fetch("/add-order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      class: document.getElementById("class").value,
-      item: document.getElementById("item").value
-    })
-  })
-  .then(res => res.text())
-  .then(data => {
-    document.getElementById("msg").innerText = data;
-  });
-}
-</script>
+  <!-- 🔥 PORTFOLIO SECTION -->
+  <div class="portfolio">
+    <h2>👨‍💻 My Portfolio</h2>
+
+    <img src="yourphoto.jpg" alt="My Photo">
+
+    <p><b>Name:</b> Sylvester Galilee</p>
+    <p><b>Email:</b> 25aima46@kristujayanti.com</p>
+    <p><b>Phone:</b> 9538167555</p>
+
+  </div>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
