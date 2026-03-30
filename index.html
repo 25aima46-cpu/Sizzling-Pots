@@ -6,26 +6,16 @@
 </head>
 <body>
 
-<!-- 🔥 NAVBAR -->
-<div class="navbar">
-  <h2 class="logo">🍲 Sizzling Pots</h2>
-  <a href="/portfolio">My Portfolio</a>
-</div>
-
-<!-- 🔥 HEADER -->
 <div class="header">
   <h1>Welcome to Sizzling Pots 🔥</h1>
-  <p>Hot & Delicious Food Delivered Fast</p>
 </div>
 
-<!-- 🍽️ FOOD ORDER CARD -->
 <div class="card">
   <h2>Order Your Food</h2>
 
-  <input id="name" placeholder="Your Name">
-  <input id="email" placeholder="Your Email">
+  <input id="name" placeholder="Name">
+  <input id="email" placeholder="Email">
 
-  <!-- 🍲 FOOD OPTIONS -->
   <select id="item">
     <option>Chicken Biryani</option>
     <option>Meals</option>
@@ -46,7 +36,9 @@
 function placeOrder() {
   fetch("/add-order", {
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
