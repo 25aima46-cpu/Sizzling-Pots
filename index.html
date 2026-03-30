@@ -1,67 +1,65 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GreenBasket</title>
+  <title>Sizzling Pots</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
+<!-- 🔥 NAVBAR -->
+<div class="navbar">
+  <h2 class="logo">🍲 Sizzling Pots</h2>
+  <a href="/portfolio">My Portfolio</a>
+</div>
 
-<h1>🛒 GreenBasket</h1>
+<!-- 🔥 HEADER -->
+<div class="header">
+  <h1>Welcome to Sizzling Pots 🔥</h1>
+  <p>Hot & Delicious Food Delivered Fast</p>
+</div>
 
+<!-- 🍽️ FOOD ORDER CARD -->
 <div class="card">
-<h2>Student Details</h2>
-<p><b>Name:</b> Sylvester Galilee</p>
-<p><b>Class:</b> 2nd Sem BSc AIML</p>
-<p><b>Email:</b> 25aima46@kristujayanti.com</p>
+  <h2>Order Your Food</h2>
+
+  <input id="name" placeholder="Your Name">
+  <input id="email" placeholder="Your Email">
+
+  <!-- 🍲 FOOD OPTIONS -->
+  <select id="item">
+    <option>Chicken Biryani</option>
+    <option>Meals</option>
+    <option>Roti Curry</option>
+    <option>Curd Rice</option>
+    <option>Fried Rice</option>
+    <option>Noodles</option>
+  </select>
+
+  <input id="class" placeholder="Address / Table No">
+
+  <button onclick="placeOrder()">Order Now 🔥</button>
+
+  <p id="msg"></p>
 </div>
 
-<div class="card">
-<h2>Place Order</h2>
+<script>
+function placeOrder() {
+  fetch("/add-order", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      class: document.getElementById("class").value,
+      item: document.getElementById("item").value
+    })
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("msg").innerText = data;
+  });
+}
+</script>
 
-<form id="orderForm">
-  <input type="text" id="name" placeholder="Name" required>
-  <input type="email" id="email" placeholder="Email" required>
-  <input type="text" id="class" placeholder="Class" required>
-  <input type="text" id="item" placeholder="Item" required>
-
-  <button type="submit">Place Order</button>
-</form>
-<br>
-<a href="/orders">View Orders</a> |
-<a href="/portfolio">My Portfolio</a>
-
-</div>
-
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
-<script>
-document.getElementById("orderForm").addEventListener("submit", async function(e) {
-  e.preventDefault();
-
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const studentClass = document.getElementById("class").value;
-  const item = document.getElementById("item").value;
-
-  const res = await fetch("/add-order", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      name,
-      email,
-      class: studentClass,
-      item
-    })
-  });
-
-  const data = await res.text();
-  alert(data);
-});
-</script>

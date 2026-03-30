@@ -1,51 +1,96 @@
 body {
-  font-family: Arial;
-  background: linear-gradient(to right, #00c6ff, #0072ff);
   margin: 0;
+  font-family: 'Segoe UI';
+  background: linear-gradient(-45deg, #ff512f, #dd2476, #ff9966, #ff5e62);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
   color: white;
 }
 
-.container {
+/* 🌈 Animated background */
+@keyframes gradient {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* 🔥 Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: rgba(0,0,0,0.7);
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* 🍲 Animated logo */
+.logo {
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,100% {transform: translateY(0);}
+  50% {transform: translateY(-5px);}
+}
+
+/* Header */
+.header {
   text-align: center;
-  padding: 30px;
+  margin-top: 20px;
 }
 
+/* Card */
 .card {
-  background: rgba(0,0,0,0.6);
-  padding: 20px;
-  margin: 20px auto;
-  width: 300px;
+  background: white;
+  color: black;
+  padding: 25px;
+  width: 320px;
+  margin: 30px auto;
   border-radius: 15px;
-  box-shadow: 0 0 10px black;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  animation: fadeIn 1s ease;
 }
 
-input {
+/* Fade animation */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1;}
+}
+
+/* Inputs */
+input, select {
   width: 90%;
   padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  border: none;
+  margin: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
+/* Button */
 button {
-  padding: 10px 20px;
-  background: #00ffcc;
+  width: 95%;
+  padding: 12px;
   border: none;
-  border-radius: 5px;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 button:hover {
-  background: #00cc99;
+  transform: scale(1.05);
 }
 
-a {
-  color: yellow;
-  text-decoration: none;
-}
-
-.profile {
-  width: 120px;
-  border-radius: 50%;
-  margin: 10px;
+/* Message */
+#msg {
+  margin-top: 10px;
+  font-weight: bold;
 }
